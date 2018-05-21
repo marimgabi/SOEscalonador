@@ -1,7 +1,6 @@
 package EscalonadorRB;
 
 import escalonadornp.Processo;
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -10,14 +9,15 @@ public class EscalonadorRB {
     int nProcessos;
     int mTempoChegada;
     int mExecucao;
-    int  quantum;
+    int quantum;
     Processo processExe;
     ArrayList<Processo> processos;
     ArrayList<Processo> prontos;
     ArrayList<Processo> finalizados;
     Random gerador = new Random();
 
-    public EscalonadorRB(int time, int nProcessos, int mTempoChegada, int mExecucao) {
+    public EscalonadorRB(int time, int nProcessos, int mTempoChegada, int mExecucao,int quantum) {
+        this.quantum=quantum;
         this.time = time;
         this.nProcessos = nProcessos;
         this.mTempoChegada = mTempoChegada;
@@ -45,11 +45,12 @@ public class EscalonadorRB {
              if(processExe.getTempoFalta()>0) {
                  time++;
                  processExe.setTempoFalta(processExe.getTempoFalta() - 1);
-             }else if(processExe.getTempoFalta()==0){
-                finalizados.add(processExe);
+             }
+             if(processExe.getTempoFalta()==0){
                 finalizados.add(processExe);
                 prontos.remove(processExe);
                 processExe=null;
+                break;
              }
         }
 
@@ -57,6 +58,23 @@ public class EscalonadorRB {
     public void espeProcess(){
         for(Processo p:this.prontos){
             p.setTempoEspera(p.getTempoEspera()+1);
+            time++;
+        }
+    }
+    public void moveExec(){
+        for(Processo p:prontos){
+            if(p.getTempoChegada()==time){
+                if(processExe==null){
+                    processExe=p;
+                }
+            }
+        }
+    }
+    public void trocaProcess(){
+        if(processExe.getId()==prontos.get(prontos.size()-1).getId()){
+            processExe=prontos.get(0);
+        }else{
+            processExe=prontos.get(prontos.indexOf(processExe)+1);
         }
     }
 }

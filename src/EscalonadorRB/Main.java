@@ -16,5 +16,7 @@ public class Main {
 
         System.out.println("Informe o tempo médio de execução: ");
         mediaExec=entrada.nextInt();
+
+
     }
 }

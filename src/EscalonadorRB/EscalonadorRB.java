@@ -22,15 +22,28 @@ public class EscalonadorRB {
         this.nProcessos = nProcessos;
         this.mTempoChegada = mTempoChegada;
         this.mExecucao = mExecucao;
+        int maiorExec=0;
+        int tempoTotal=0;
         processos=new ArrayList<>();
         prontos=new ArrayList<>();
         finalizados= new ArrayList<>();
         for (int i=0; i<this.nProcessos; i++){
-                    Processo p = new Processo();
-                    p.setId(i);
-                    p.setTempoExec((int) (gerador.nextInt((int) (((mExecucao*1.5) - (mExecucao*0.5)) + 1)) + (mExecucao*0.5)));
-                    p.setTempoFalta(p.getTempoExec());
-                    processos.add(p);
+            Processo p = new Processo();
+            p.setId(i);
+            p.setTempoExec((int) (gerador.nextInt((int) (((mExecucao*1.5) - (mExecucao*0.5)) + 1)) + (mExecucao*0.5)));
+            p.setTempoFalta(p.getTempoExec());
+            processos.add(p);
+        }
+        //ENCONTRA O MAIOR TEMPO DE EXECUÇÃO E O TEMPO TOTAL DE EXEC
+        for(Processo a: processos){
+            if (a.getTempoExec()>maiorExec){
+                maiorExec=a.getTempoExec();
+                tempoTotal+=a.getTempoExec();
+            }
+        }
+        //SETA OS TEMPOS DE CHEGADA ALEATORIAMENTE
+        for(Processo a: processos){
+            a.setTempoChegada((int) (gerador.nextInt((int) ((tempoTotal-maiorExec) + 1))));
         }
     }
     public void movePronto(){
@@ -39,9 +52,9 @@ public class EscalonadorRB {
             prontos.add(p);
         }
     }
-    public void execProcess(int quantum){
+    public void execProcess(){
         processExe.setTempoFalta(processExe.getTempoExec());
-         for(int i=0;i<quantum;i++){
+         for(int i=0;i<this.quantum;i++){
              if(processExe.getTempoFalta()>0) {
                  time++;
                  processExe.setTempoFalta(processExe.getTempoFalta() - 1);

@@ -53,11 +53,20 @@ public class Main {
         EscalonadorRB pc = new EscalonadorRB(n,mediaChegada,maiorExec,quantun);
         pc.setProcessos(processos);
         System.out.println("Nº P:"+pc.getnProcessos());
+
         while ((pc.getProntos().size()!=0)||(pc.getFinalizados().size()!=pc.getnProcessos())){
             pc.movePronto();
-            pc.processExec();
+            pc.exec();
+//            if(pc.getTime()>tempoTotal*10){
+//
+//                break;
+//            }
 
         }
+        System.out.println();
+        System.out.println("P:"+pc.prontos.size());
+        System.out.println("F:"+pc.finalizados.size());
+
         System.out.print("\n");
 //        for (Processo p:pc.getFinalizados()){
 //            System.out.println(p.toString());

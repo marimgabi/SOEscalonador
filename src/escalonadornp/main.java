@@ -83,7 +83,7 @@ public class main {
         }
         //SETA OS TEMPOS DE CHEGADA ALEATORIAMENTE
         for(Processo a: processos){
-            a.setTempoChegada((int) (gerador.nextInt((int) ((tempoTotal-maiorExec) + 1))));
+            a.setTempoChegada( (gerador.nextInt( ((tempoTotal-maiorExec) + 1))));
         }
 
         for (Processo a:processos){

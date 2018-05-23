@@ -1,5 +1,9 @@
 package EscalonadorRB;
 
+import escalonadornp.Processo;
+
+import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
@@ -17,6 +21,42 @@ public class Main {
         System.out.println("Informe o tempo médio de execução: ");
         mediaExec=entrada.nextInt();
 
+        System.out.println("Informe o tempo tamanho de quantun (unidades de tempo genérico): ");
+        int quantun =entrada.nextInt();
 
+        ArrayList<Processo> processos = new ArrayList<>();
+        Random gerador = new Random();
+        for (int i=0; i<n; i++){
+            Processo p = new Processo();
+            p.setId(i);
+            p.setTempoExec((int) (gerador.nextInt((int) (((mediaExec*1.5) - (mediaExec*0.5)) + 1)) + (mediaExec*0.5)));
+            p.setTempoFalta(p.getTempoExec());
+            processos.add(p);
+        }
+        //ENCONTRA O MAIOR TEMPO DE EXECUÇÃO E O TEMPO TOTAL DE EXEC
+        for(Processo a: processos){
+            if (a.getTempoExec()>maiorExec){
+                maiorExec=a.getTempoExec();
+                tempoTotal+=a.getTempoExec();
+            }
+        }
+        //SETA OS TEMPOS DE CHEGADA ALEATORIAMENTE
+        for(Processo a: processos){
+            a.setTempoChegada( (gerador.nextInt( ((tempoTotal-maiorExec) + 1))));
+        }
+        for (Processo a:processos){
+            System.out.println(a.toString());
+        }
+
+        EscalonadorRB pc = new EscalonadorRB(n,mediaChegada,maiorExec,quantun);
+        pc.setProcessos(processos);
+        while (pc.finalizados.size()<pc.nProcessos){
+            pc.movePronto();
+            pc.lazy();
+            System.out.println("Loop");
+            pc.execProcess();
+            pc.trocaProcess();
+
+        }
     }
 }

@@ -14,11 +14,18 @@ public class EscalonadorRB {
     ArrayList<Processo> processos;
     ArrayList<Processo> prontos;
     ArrayList<Processo> finalizados;
-    Random gerador = new Random();
 
-    public EscalonadorRB(int time, int nProcessos, int mTempoChegada, int mExecucao,int quantum) {
+    public ArrayList<Processo> getProcessos() {
+        return processos;
+    }
+
+    public void setProcessos(ArrayList<Processo> processos) {
+        this.processos = processos;
+    }
+
+    public EscalonadorRB(int nProcessos, int mTempoChegada, int mExecucao, int quantum) {
         this.quantum=quantum;
-        this.time = time;
+        this.time = 0;
         this.nProcessos = nProcessos;
         this.mTempoChegada = mTempoChegada;
         this.mExecucao = mExecucao;
@@ -27,51 +34,39 @@ public class EscalonadorRB {
         processos=new ArrayList<>();
         prontos=new ArrayList<>();
         finalizados= new ArrayList<>();
-        for (int i=0; i<this.nProcessos; i++){
-            Processo p = new Processo();
-            p.setId(i);
-            p.setTempoExec((int) (gerador.nextInt((int) (((mExecucao*1.5) - (mExecucao*0.5)) + 1)) + (mExecucao*0.5)));
-            p.setTempoFalta(p.getTempoExec());
-            processos.add(p);
-        }
-        //ENCONTRA O MAIOR TEMPO DE EXECUÇÃO E O TEMPO TOTAL DE EXEC
-        for(Processo a: processos){
-            if (a.getTempoExec()>maiorExec){
-                maiorExec=a.getTempoExec();
-                tempoTotal+=a.getTempoExec();
-            }
-        }
-        //SETA OS TEMPOS DE CHEGADA ALEATORIAMENTE
-        for(Processo a: processos){
-            a.setTempoChegada((int) (gerador.nextInt((int) ((tempoTotal-maiorExec) + 1))));
-        }
     }
     public void movePronto(){
         for(Processo p:processos)
-        if (time==p.getTempoChegada()){
-            prontos.add(p);
-        }
+            if (time==p.getTempoChegada()){
+                prontos.add(p);
+            }
     }
     public void execProcess(){
         processExe.setTempoFalta(processExe.getTempoExec());
+        System.out.print(processExe.getId());
          for(int i=0;i<this.quantum;i++){
              if(processExe.getTempoFalta()>0) {
                  time++;
                  processExe.setTempoFalta(processExe.getTempoFalta() - 1);
+                 espeProcess();
+                 System.out.print("|");
              }
              if(processExe.getTempoFalta()==0){
                 finalizados.add(processExe);
                 prontos.remove(processExe);
-                processExe=null;
+                trocaProcess();
                 break;
              }
-        }
 
+        }
     }
     public void espeProcess(){
         for(Processo p:this.prontos){
-            p.setTempoEspera(p.getTempoEspera()+1);
-            time++;
+            if(processExe!=null) {
+                if (p.getId() != processExe.getId()) {
+                    p.setTempoEspera(p.getTempoEspera() + 1);
+                }
+            }
         }
     }
     public void moveExec(){
@@ -83,11 +78,25 @@ public class EscalonadorRB {
             }
         }
     }
+    public void lazy(){
+        while (processExe==null) {
+            if(prontos.size()>0){
+
+            }
+            moveExec();
+            espeProcess();
+            time++;
+        }
+    }
     public void trocaProcess(){
-        if(processExe.getId()==prontos.get(prontos.size()-1).getId()){
-            processExe=prontos.get(0);
-        }else{
-            processExe=prontos.get(prontos.indexOf(processExe)+1);
+        if((prontos.size()>0)) {
+            if (processExe.getId() == prontos.get(prontos.size() - 1).getId()){
+                processExe = prontos.get(0);
+            } else {
+                processExe = prontos.get(prontos.indexOf(processExe) + 1);
+            }
+        }else {
+            processExe=null;
         }
     }
 }

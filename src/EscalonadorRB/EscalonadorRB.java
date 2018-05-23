@@ -134,6 +134,7 @@ public class EscalonadorRB {
 
     public void execProces(Processo p){
         for (int i = 0; i < quantum; i++) {
+            this.addWait(p);
             if (p.getTempoFalta() > quantum) {
                 p.setTempoFalta(p.getTempoFalta() - 1);
                 this.time++;
@@ -147,6 +148,7 @@ public class EscalonadorRB {
                     System.out.print(this.time+" ");
                     this.moveFinal(p);
                     this.movePronto();
+
                     break;
                 } else {
                     p.setTempoFalta(p.getTempoFalta() - 1);
@@ -161,6 +163,15 @@ public class EscalonadorRB {
     public void moveFinal(Processo p){
         this.prontos.remove(p);
         this.finalizados.add(p);
+    }
+
+    public void addWait(Processo notThisOne){
+        for(Processo p:prontos){
+            if(notThisOne.getId()!=p.getId()){
+                p.setTempoEspera(p.getTempoEspera()+1);
+            }
+
+        }
     }
 
 }

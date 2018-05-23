@@ -68,8 +68,22 @@ public class Main {
         System.out.println("F:"+pc.finalizados.size());
 
         System.out.print("\n");
-//        for (Processo p:pc.getFinalizados()){
-//            System.out.println(p.toString());
-//        }
+        float mediaTo=0,mediaEx=0,mediaEs=0;
+        for (Processo p:pc.getFinalizados()){
+            p.setTempoTotal(p.getTempoExec()+p.getTempoEspera());
+            System.out.println(p.toString());
+            mediaTo+=p.getTempoTotal();
+            mediaEx+=p.getTempoExec();
+            mediaEs+=p.getTempoEspera();
+        }
+        maiorExec= mediaExec/n;
+        mediaEs=mediaEs/n;
+        mediaTo=mediaTo/n;
+        System.out.println("==============Médias da Execução=============");
+        System.out.println("Media de Execução:"+mediaEx);
+        System.out.println("Media de Espera:"+mediaEs);
+        System.out.println("Media Total:"+mediaTo);
+        System.out.println("==============================================");
+
     }
 }

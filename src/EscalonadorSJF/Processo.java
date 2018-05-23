@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package escalonadornp;
+package EscalonadorSJF;
 
 /**
  *
@@ -11,7 +11,7 @@ package escalonadornp;
  */
 public class Processo {
     int id;
-    int tempoTotal;
+    int tempoTotal; //tempo total de execução
     int tempoExec;
     int tempoEspera;
     int tempoChegada;

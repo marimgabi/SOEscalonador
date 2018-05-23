@@ -1,6 +1,6 @@
 package EscalonadorRB;
 
-import escalonadornp.Processo;
+import EscalonadorSJF.Processo;
 
 import java.util.ArrayList;
 import java.util.Random;

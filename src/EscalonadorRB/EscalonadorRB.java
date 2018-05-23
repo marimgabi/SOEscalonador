@@ -1,8 +1,7 @@
 package EscalonadorRB;
 
-import escalonadornp.Processo;
+import EscalonadorSJF.Processo;
 import java.util.ArrayList;
-import java.util.Random;
 
 
 
@@ -124,8 +123,8 @@ public class EscalonadorRB {
 
             }
         } else {
-            this.time++;
             this.movePronto();
+            this.time++;
             System.out.print("&"+this.time+"&");
         }
 
@@ -142,7 +141,9 @@ public class EscalonadorRB {
                 System.out.print(this.time+" ");
 
             } else {
-                if (p.getTempoFalta() == 1) {
+                if(p.getTempoFalta()==0){
+                    break;
+                }else if (p.getTempoFalta() ==1) {
                     p.setTempoFalta(p.getTempoFalta() - 1);
                     this.time++;
                     System.out.print(this.time+" ");

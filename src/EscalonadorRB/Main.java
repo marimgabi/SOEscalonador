@@ -5,6 +5,8 @@ import escalonadornp.Processo;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Main {
     static Scanner entrada = new Scanner(System.in);
@@ -50,13 +52,20 @@ public class Main {
 
         EscalonadorRB pc = new EscalonadorRB(n,mediaChegada,maiorExec,quantun);
         pc.setProcessos(processos);
-        while (pc.finalizados.size()<pc.nProcessos){
+        System.out.println("Nº P:"+pc.getnProcessos());
+        while ((pc.getProntos().size()!=0)||(pc.getFinalizados().size()!=pc.getnProcessos())){
             pc.movePronto();
-            pc.lazy();
-            System.out.println("Loop");
-            pc.execProcess();
-            pc.trocaProcess();
+            pc.setTime(pc.getTime()+1);
+            System.out.println("time:"+pc.getTime());
+            pc.processExec();
+        }
 
+//        ExecutorService executor = Executors.newCachedThreadPool();
+//        executor.execute(new Pronto(pc));
+//        executor.execute(new Executa(pc));
+//        executor.shutdown();
+        for (Processo p:pc.getFinalizados()){
+            System.out.println(p.toString());
         }
     }
 }

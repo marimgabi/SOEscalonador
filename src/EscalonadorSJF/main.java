@@ -45,6 +45,8 @@ public class main {
 
         int n, mediaChegada, mediaExec, maiorExec=0, tempoTotal=0;
 
+        System.out.println("================--SJF--==================");
+
         System.out.println("Informe a quantidade de processos: ");
         n=entrada.nextInt();
 
@@ -151,6 +153,10 @@ public class main {
         System.out.println("Tempo médio de execução: " +mediaFinalExec/n+"\n");
         System.out.println("Tempo médio de espera: "+mediaFinalEspera/n+"\n");
         System.out.println("Tempo médio total de execução: "+mediaFinalTotal/n+"\n");
+
+
+        System.out.println("\n\n\n\n================--SRB--==================");
+
         System.out.println("Informe o tempo tamanho de quantun (unidades de tempo genérico): ");
         quantum =entrada.nextInt();
 

@@ -122,7 +122,7 @@ public class EscalonadorRB {
                 n=prontos.size();
 
             }
-        } else {
+        } else if(this.finalizados.size()!=nProcessos){
             this.movePronto();
             this.time++;
             System.out.print("&"+this.time+"&");
@@ -171,7 +171,6 @@ public class EscalonadorRB {
             if(notThisOne.getId()!=p.getId()){
                 p.setTempoEspera(p.getTempoEspera()+1);
             }
-
         }
     }
 

@@ -107,28 +107,31 @@ public class EscalonadorRB {
 
                 p.setTempoFalta(p.getTempoExec());
                 this.prontos.add(p);
-
+                System.out.println("-----------------entrou----------------:"+p.getId() + "T:" +this.time );
                 //System.out.println(p.toString());
             }
     }
     public void exec(){
         if (this.prontos.size() > 0) {
             int n = this.prontos.size();
-            for(int relative=0;relative<n;relative++){
-                Processo p = this.prontos.get(relative);
+            for(int i=0;i<n;i++){
+                Processo p = this.prontos.get(i);
                 System.out.println("***********p"+p.getId()+"-F "+p.getTempoFalta());
                 execProces(p);
                 System.out.println();
-                n=prontos.size();
+                if((n<prontos.size())){
+                    if(p!=this.prontos.get(i)){
+                        i--;
+                    }
+
+                }else if (n>prontos.size()){
+                    n=prontos.size();
+                }
 
             }
-        } else if(this.finalizados.size()!=nProcessos){
-            this.movePronto();
-            this.time++;
-            System.out.print("&"+this.time+"&");
+        } else{
+            this.update();
         }
-
-
     }
 
     public void execProces(Processo p){
@@ -136,34 +139,38 @@ public class EscalonadorRB {
             this.addWait(p);
             if (p.getTempoFalta() > quantum) {
                 p.setTempoFalta(p.getTempoFalta() - 1);
-                this.time++;
-                this.movePronto();
-                System.out.print(this.time+" ");
+
+                this.update();
 
             } else {
-                if(p.getTempoFalta()==0){
-                    break;
-                }else if (p.getTempoFalta() ==1) {
-                    p.setTempoFalta(p.getTempoFalta() - 1);
-                    this.time++;
-                    System.out.print(this.time+" ");
+                if (p.getTempoFalta() == 0) {
+
                     this.moveFinal(p);
-                    this.movePronto();
+                    break;
+
+                }
+                if (p.getTempoFalta() == 1) {
+                    p.setTempoFalta(p.getTempoFalta() - 1);
+
+                    this.update();
+
+                    this.moveFinal(p);
 
                     break;
                 } else {
                     p.setTempoFalta(p.getTempoFalta() - 1);
-                    this.time++;
-                    this.movePronto();
-                    System.out.print(this.time+" ");
+
+                    this.update();
+
                 }
             }
         }
     }
 
     public void moveFinal(Processo p){
-        this.prontos.remove(p);
         this.finalizados.add(p);
+        this.prontos.remove(p);
+        System.out.println("-----------------saiu----------------:"+p.getId() + "T:" +this.time );
     }
 
     public void addWait(Processo notThisOne){
@@ -172,6 +179,16 @@ public class EscalonadorRB {
                 p.setTempoEspera(p.getTempoEspera()+1);
             }
         }
+    }
+    public void update(){
+
+        this.movePronto();
+        if((this.prontos.size()==0)&&(this.finalizados.size()<nProcessos)){
+            System.out.print("&"+this.time+"&");
+        }else if(this.prontos.size()>0){
+            System.out.println(this.time);
+        }
+        this.time++;
     }
 
 }

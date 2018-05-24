@@ -167,10 +167,10 @@ public class main {
         while ((Pc.getProntos().size()!=0)||(Pc.getFinalizados().size()!=Pc.getnProcessos())){
             //Pc.movePronto();
             Pc.exec();
-//            if(Pc.getTime()>tempoTotal*10){
-//
-//                break;
-//            }
+            if(Pc.getTime()>tempoTotal*10){
+
+                break;
+            }
 
         }
         System.out.println();

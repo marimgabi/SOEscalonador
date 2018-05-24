@@ -54,8 +54,8 @@ public class Main {
         pc.setProcessos(processos);
         System.out.println("Nº P:"+pc.getnProcessos());
 
-        while ((pc.getProntos().size()!=0)||(pc.getFinalizados().size()!=pc.getnProcessos())){
-            pc.movePronto();
+        while (pc.getFinalizados().size()!=pc.getnProcessos()){
+            //pc.movePronto();
             pc.exec();
 //            if(pc.getTime()>tempoTotal*10){
 //

@@ -190,6 +190,7 @@ public class main {
         maiorExec= mediaExec/n;
         mediaEs=mediaEs/n;
         mediaTo=mediaTo/n;
+        mediaEx=mediaEx/n;
         System.out.println("==============Médias da Execução=============");
         System.out.println("Media de Execução:"+mediaEx);
         System.out.println("Media de Espera:"+mediaEs);

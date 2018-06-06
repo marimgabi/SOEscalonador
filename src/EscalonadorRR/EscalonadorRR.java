@@ -1,11 +1,11 @@
-package EscalonadorRB;
+package EscalonadorRR;
 
 import EscalonadorSJF.Processo;
 import java.util.ArrayList;
 
 
 
-public class EscalonadorRB {
+public class EscalonadorRR {
     int time;
     int nProcessos;
     int mTempoChegada;
@@ -88,7 +88,7 @@ public class EscalonadorRB {
         this.processos = processos;
     }
 
-    public EscalonadorRB(int nProcessos, int mTempoChegada, int mExecucao, int quantum) {
+    public EscalonadorRR(int nProcessos, int mTempoChegada, int mExecucao, int quantum) {
         this.quantum=quantum;
         this.time = 0;
         this.nProcessos = nProcessos;

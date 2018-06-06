@@ -1,4 +1,4 @@
-package EscalonadorRB;
+package EscalonadorRR;
 
 import EscalonadorSJF.Processo;
 
@@ -50,7 +50,7 @@ public class Main {
 //            System.out.println(a.toString());
 //        }
 
-        EscalonadorRB pc = new EscalonadorRB(n,mediaChegada,maiorExec,quantun);
+        EscalonadorRR pc = new EscalonadorRR(n,mediaChegada,maiorExec,quantun);
         pc.setProcessos(processos);
         System.out.println("Nº P:"+pc.getnProcessos());
 

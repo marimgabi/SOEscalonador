@@ -6,7 +6,7 @@
 package EscalonadorSJF;
 
 //import com.sun.tracing.dtrace.DependencyClass;
-import EscalonadorRB.EscalonadorRB;
+import EscalonadorRR.EscalonadorRR;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -155,15 +155,16 @@ public class main {
         System.out.println("Tempo médio total de execução: "+mediaFinalTotal/n+"\n");
 
 
-        System.out.println("\n\n\n\n================--SRB--==================");
+        System.out.println("\n\n\n\n================--SRR--==================");
 
         System.out.println("Informe o tempo tamanho de quantun (unidades de tempo genérico): ");
         quantum =entrada.nextInt();
 
-        EscalonadorRB Pc = new EscalonadorRB(n,mediaChegada,maiorExec,quantum);
+        EscalonadorRR Pc = new EscalonadorRR(n,mediaChegada,maiorExec,quantum);
         Pc.setProcessos((ArrayList<Processo>) processos);
         System.out.println("Nº P:"+Pc.getnProcessos());
 
+        //Executa até todos os processos terminarem
         while ((Pc.getProntos().size()!=0)||(Pc.getFinalizados().size()!=Pc.getnProcessos())){
             //Pc.movePronto();
             Pc.exec();
@@ -174,8 +175,8 @@ public class main {
 
         }
         System.out.println();
-        System.out.println("P:"+Pc.getProntos().size());
-        System.out.println("F:"+Pc.getFinalizados().size());
+//        System.out.println("P:"+Pc.getProntos().size());
+//        System.out.println("F:"+Pc.getFinalizados().size());
 
         System.out.print("\n");
         float mediaTo=0,mediaEx=0,mediaEs=0;
